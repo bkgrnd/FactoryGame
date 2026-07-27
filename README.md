@@ -18,6 +18,8 @@ A lightweight, terminal-based factory simulation game built with Python and the 
   * **Seller (`💰`):** Converts processed goods into cold hard cash.
   * **Conveyor (`➡️`):** Transports items across the grid in four rotatable directions.
 * **Simulation Engine:** Real-time tick system handling item transportation, production queues, and inventory buffers.
+* **Local saves:**  COMING SOON DONT WORRY
+
 
 ---
 
