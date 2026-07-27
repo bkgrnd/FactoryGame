@@ -1,17 +1,9 @@
-# ==========================================
-# FACTORY GAME (FACTORIO LITE)
-# ==========================================
-
 from enum import Enum
 from typing import List, Optional, Any, Callable
 from textual.app import App, ComposeResult
 from textual.widgets import Input, RichLog, Static, Header
 from textual.containers import Horizontal, Vertical
 from rich.text import Text
-
-# ==========================================
-# STUFF AND THINGS (ITEMS & DIRS)
-# ==========================================
 
 class Item(Enum):
     # The different types of items that can be moved and processed in the factory
