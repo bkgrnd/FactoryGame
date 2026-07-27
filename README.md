@@ -1,4 +1,4 @@
-# Factory Game 🏭
+# Terminal Factory 🏭
 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/a9830512-5af2-43ef-a0e8-a17abd680bf7" />
 
@@ -15,11 +15,9 @@ A lightweight, terminal-based factory simulation game built with Python and the 
   * **Depot (`🪨`):** Automatically mines and outputs raw rocks.
   * **Furnace (`🔥`):** Smelts raw rocks into bricks.
   * **Press (`⚙️`):** Presses bricks into high-value gems.
-  * **Seller (`💰`):** Converts processed goods into cold hard cash.
+  * **Seller (`🐧`):** Converts processed goods into cold hard cash.
   * **Conveyor (`➡️`):** Transports items across the grid in four rotatable directions.
 * **Simulation Engine:** Real-time tick system handling item transportation, production queues, and inventory buffers.
-* **Local saves:**  COMING SOON DONT WORRY
-
 
 ---
 

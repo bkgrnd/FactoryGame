@@ -1,83 +1,65 @@
-from enum import Enum
-from typing import List, Optional, Any, Callable
-from textual.app import App, ComposeResult
-from textual.widgets import Input, RichLog, Static, Header
-from textual.containers import Horizontal, Vertical
-from rich.text import Text
+# sor ryfor bad code, used psuedocode
+from bullshit import what
+from import import import
+impotr
+texture
 
-class Item(Enum):
-    # The different types of items that can be moved and processed in the factory
-    ROCK = "🪨"
-    SMELTED = "🧱"
-    PRESSED = "💎"
+text import
 
-ITEM_PRICES = {
-    Item.ROCK: 1,
-    Item.SMELTED: 2,
-    Item.PRESSED: 3
-}
+class:
+    enumerate
+    emoji
+    emoji
+    emoji
+    emoji thn
 
-class Direction(Enum):
-    # Cardinal directions used for machine output and conveyor movement
-    UP = (0, -1)
-    RIGHT = (1, 0)
-    DOWN = (0, 1)
-    LEFT = (-1, 0)
+ITEM_PRICES
+    One rock is $1.0000000 
+    One water is $1.000222
+    One dirt
 
-# ==========================================
+class Direction(Enum): # WHAT IS THIS??????????????????????????????????????
+    UP = this goes up now # NO GENUINELY FUCK THIS like im actually trying to process this and wtf
+    R) direction object direction direction 0 # whatever ill just delete evrything
+
+# 8==========================================D
 # MACHINES
-# ==========================================
+# 8==========================================D
 
 class Machine:
-    def __init__(self, name: str, base_emoji: str):
-        self.name = name
-        self._base_emoji = base_emoji
-        self.direction = Direction.RIGHT  
-        self.input_buffer: List[Item] = []   # Items waiting to be processed inside this machine
-        self.output_buffer: List[Item] = []  # Finished items waiting to leave this machine
-        self.max_input = 1
-        self.max_output = 1
+    items being processed are being processed using open source software 
+    #LinusTorvalds
+    #Linux
 
-    @property
-    def emoji(self) -> str:
-        return self._base_emoji
+    idk what this does but like emojis
 
     def display_3x3(self) -> List[str]:
-        # Generates the 3x3 visual block representation of the machine for the UI grid
-        top, bottom, left, right = " ┌┐ ", " └┘ ", " ", " "
-        if self.direction == Direction.UP: top = " ⇡⇡ "
-        elif self.direction == Direction.DOWN: bottom = " ⇣⇣ "
-        elif self.direction == Direction.LEFT: left = "⇠"
-        elif self.direction == Direction.RIGHT: right = "⇢"
-        return [top, f"{left}{self.emoji}{right}", bottom]
+        Generates block which is 3 Centimeters by 3 Centimeters by 3 Centimeters
+        WEverything sits in Block 
+        Am i Correct
 
-    def rotate(self) -> None:
-        # Changes the direction the machine outputs items (rotates clockwise)
-        dirs = [Direction.UP, Direction.RIGHT, Direction.DOWN, Direction.LEFT]
-        self.direction = dirs[(dirs.index(self.direction) + 1) % 4]
 
-    def can_accept(self, item: Item) -> bool:
-        # Checks if this machine has room to take in a new item
-        return False
+    #Rotate
+    #Vibes
 
-    def accept(self, item: Item, current_tick: int) -> None:
-        # Puts an incoming item into the machine's input storage
-        self.input_buffer.append(item)
+    Can Accept
 
-    def process(self, current_tick: int, game_state: Any, log: Callable[[str], None]) -> None:
-        # Main logic loop for what the machine does on every game tick
-        pass
+    Can it accept
 
-    def peek_output(self, current_tick: int) -> Optional[Item]:
-        # Looks at the first finished item ready to leave without removing it yet
-        return self.output_buffer[0] if self.output_buffer else None
+    Process
 
-    def pop_output(self) -> None:
-        # Permanently removes/takes out the finished item once it successfully moves to a neighbor
-        if self.output_buffer:
+    Sneak peek
+
+    Pop the stack
             self.output_buffer.pop(0)
 
 
+
+"""
+A conveyor belt is the carrying medium of a belt conveyor system. 
+A belt conveyor system consists of two or more pulleys, with a closed loop of carrying medium—the conveyor belt—that rotates about them. 
+One or both of the pulleys are powered, moving the belt and the material on the belt forward.
+"""
 class Conveyor(Machine):
     def __init__(self):
         super().__init__("Conveyor", "➡️")
@@ -89,12 +71,9 @@ class Conveyor(Machine):
         return {Direction.UP: "⬆️", Direction.RIGHT: "➡️", Direction.DOWN: "⬇️", Direction.LEFT: "⬅️"}[self.direction]
 
     def display_3x3(self) -> List[str]:
-        i = self.item.value if self.item else "  "
-        if self.direction == Direction.UP: return [f" {i} ", f" {self.emoji} ", "    "]
-        if self.direction == Direction.DOWN: return ["    ", f" {self.emoji} ", f" {i} "]
-        if self.direction == Direction.RIGHT: return ["    ", f"{self.emoji}{i}", "    "]
-        if self.direction == Direction.LEFT: return ["    ", f"{i}{self.emoji}", "    "]
-        return ["    ", "    ", "    "]
+        #pretty sur ethis does the same thing as the 3 centimeters by 3 cenntmers by 3 xentimerers above thing
+        # so i removed it for time optimization
+        
 
     def can_accept(self, item: Item) -> bool:
         # A conveyor can only take an item if it's completely empty
@@ -114,11 +93,7 @@ class Conveyor(Machine):
         self.item = None
 
 
-class Depot(Machine):
-    def __init__(self):
-        super().__init__("Depot", "🪨")
-        self.last_gen = 0
-        self.max_output = 999999
+# home depot machine
 
     def process(self, current_tick: int, game_state: Any, log: Callable[[str], None]) -> None:
         # Automatically spawns a raw rock item every 3 ticks
@@ -138,58 +113,10 @@ class Furnace(Machine):
         # Furnaces only accept raw rocks and only if they aren't already full
         return item == Item.ROCK and len(self.input_buffer) < self.max_input
 
-    def process(self, current_tick: int, game_state: Any, log: Callable[[str], None]) -> None:
-        # Smelts raw rocks into bricks over a set amount of time
-        if self.processing_item:
-            if current_tick - self.start_tick >= self.process_time:
-                if len(self.output_buffer) < self.max_output:
-                    self.output_buffer.append(Item.SMELTED)
-                    self.processing_item = None
-        elif self.input_buffer:
-            self.input_buffer.pop(0)
-            self.processing_item = Item.ROCK
-            self.start_tick = current_tick
+    if if if if if if if
 
 
-class Press(Machine):
-    def __init__(self):
-        super().__init__("Press", "⚙️")
-        self.process_time = 2
-        self.processing_item = None
-        self.start_tick = 0
-
-    def can_accept(self, item: Item) -> bool:
-        # Presses only accept smelted bricks and only if they have space
-        return item == Item.SMELTED and len(self.input_buffer) < self.max_input
-
-    def process(self, current_tick: int, game_state: Any, log: Callable[[str], None]) -> None:
-        # Presses bricks into high-value gems over a set amount of time
-        if self.processing_item:
-            if current_tick - self.start_tick >= self.process_time:
-                if len(self.output_buffer) < self.max_output:
-                    self.output_buffer.append(Item.PRESSED)
-                    self.processing_item = None
-        elif self.input_buffer:
-            self.input_buffer.pop(0)
-            self.processing_item = Item.SMELTED
-            self.start_tick = current_tick
-
-
-class Seller(Machine):
-    def __init__(self):
-        super().__init__("Seller", "💰")
-
-    def can_accept(self, item: Item) -> bool:
-        # Sellers accept any finished item to convert into money
-        return True
-
-    def process(self, current_tick: int, game_state: Any, log: Callable[[str], None]) -> None:
-        # Sells items currently sitting in the input buffer and adds cash to player balance
-        while self.input_buffer:
-            item = self.input_buffer.pop(0)
-            price = ITEM_PRICES.get(item, 0)
-            game_state.money += price
-            log(f"[green]Sold {item.value} for ${price}![/green]")
+# deleted for optimization
 
 # ==========================================
 # THE MAP & GAME ENGINE
@@ -216,120 +143,61 @@ class FactoryGrid:
 
 
 class GameEngine:
-    def __init__(self):
-        self.money = 0
-        self.ticks = 0
-        self.paused = False
-        self.selected_cell = 0
-        # Increased columns from 20 to 23 (+3 columns)
-        self.grid = FactoryGrid(cols=23, rows=16)
+    # like Triple A gamess
+    # import 3d
+    # import game
 
-    def tick(self, log_callback: Callable[[str], None]) -> None:
-        # Advances the game simulation by one frame (runs machine actions and item transport)
-        if self.paused: return
-        self.ticks += 1
-        
-        # Step 1: Run internal production/logic for all machines
-        for cell in self.grid.cells:
-            if cell.machine: cell.machine.process(self.ticks, self, log_callback)
-                
-        # Step 2: Try moving items from machine outputs into adjacent machine inputs
-        for cell in self.grid.cells:
-            if cell.machine:
-                item = cell.machine.peek_output(self.ticks)
-                if item:
-                    neighbor = self.grid.get_neighbor(cell.id, cell.machine.direction)
-                    if neighbor and neighbor.machine and neighbor.machine.can_accept(item):
-                        neighbor.machine.accept(item, self.ticks)
-                        cell.machine.pop_output()
-
-# ==========================================
+# 8==========================================D
 # COMMANDS & TEXT PARSER
-# ==========================================
-
-class CommandParser:
-    @staticmethod
-    def execute(command: str, game: GameEngine, log: Callable[[str], None]) -> None:
-        parts = command.strip().lower().split()
-        if not parts: return
-        cmd = parts[0]
-        
-        if cmd == "sel" and len(parts) == 3 and parts[1] == "cell":
-            try:
-                cid = int(parts[2])
-                if 0 <= cid < len(game.grid.cells):
-                    game.selected_cell = cid
-                    log(f"Selected cell {cid}.")
-                else: log("[red]Invalid cell.[/red]")
+# 8==========================================D
+D
+class CommandParser: # parses
+    @staticmethod # statics
+    def execute(command: str, game: GameEngine, log: Callable[[str], None]) -> None: # executes
+        parts = command.strip().lower().split() # parts
+        if not parts: return # condition
+        cmd = parts[0] # command
+        # blank
+        if cmd == "sel" and len(parts) == 3 and parts[1] == "cell": # condition
+            try: # error
+                # deleted everything
             except ValueError: log("[red]Invalid cell.[/red]")
                 
         elif cmd == "next":
             # Selects the next cell in line, looping back to 0 if it hits the end of the grid
-            game.selected_cell = (game.selected_cell + 1) % len(game.grid.cells)
-            log(f"Selected cell {game.selected_cell}.")
+            
 
-        elif cmd == "set" and len(parts) == 2:
-            mtype = parts[1]
-            cell = game.grid.cells[game.selected_cell]
-            if cell.machine:
-                log("[red]Cell already occupied.[/red]")
-                return
-            
-            machines = {"depot": Depot, "furnace": Furnace, "press": Press, "seller": Seller, "conveyor": Conveyor}
-            if mtype in machines:
-                cell.machine = machines[mtype]()
-                log(f"Placed {mtype.title()} at cell {game.selected_cell}.")
-            else:
-                log("[red]Unknown machine type.[/red]")
+            # idk what this does and i dont really care do you get my spirit
+            # im being stared at by my hair comb
 
-        elif cmd == "rotate":
-            cell = game.grid.cells[game.selected_cell]
-            if cell.machine:
-                cell.machine.rotate()
-                log(f"Rotated {cell.machine.name}. Now outputs: {cell.machine.direction.name}")
-            else: log("[red]No machine here to rotate.[/red]")
-            
-        elif cmd == "remove":
-            game.grid.cells[game.selected_cell].machine = None
-            log(f"Removed machine on cell {game.selected_cell}.")
-            
+            # i dont need help
+            # lmfao
         elif cmd == "help":
             log("""Commands: 
-            sel cell <id>, lets you select cell
-            next, selects the next cell
-            set <depot|furnace|press|seller|conveyor>, sets the sell
-            rotate, rotates the cell
-            remove, removes the machine on the cell
-            amirich, shows how many coins you have
-            tick, manual tick
-            pause, GUESS WHAT THIS ONE DOES
-            resume, OH MY GOOD GOLLY GEE WHAT COULD THIS POSSIBLY DO!""")
-        elif cmd == "amirich": log(f"Current Money: ${game.money}")
-        elif cmd == "tick": game.tick(log); log("Manual tick.")
-        elif cmd == "pause": game.paused = True; log("paused.")
-        elif cmd == "resume": game.paused = False; log("resumed.")
-        else: log("[red]Unknown command.[/red]")
 
-# ==========================================
+            pause, GUESS WHAT THIS ONE DOES 
+            resume, OH MY GOOD GOLLY GEE WHAT COULD THIS POSSIBLY DO!""") # but i left these two lines.... because i love them....
+        # if = comand
+
+
+# 8888==========================================DDDDDDDDD 
 # USER INTERFACE (TEXTUAL APP)
-# ==========================================
+# 8==========================================D
 
 class TerminalFactoryApp(App):
-    CSS = """
+    CSS = """ 
     #main-container { height: 100%; }
     #grid-view { width: auto; height: 100%; background: $boost; border: solid green; overflow: auto; padding: 1; }
     #right-panel { width: 1fr; height: 100%; }
     #log-view { height: 1fr; border: solid blue; padding: 0 1; scrollbar-visibility: hidden; }
     #cmd-input { dock: bottom; }
     """
+    # ^^^^^^^^^ wait why is it css wtf
+    # might be stupid forthis
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
-        with Horizontal(id="main-container"):
-            yield Static(id="grid-view")
-            with Vertical(id="right-panel"):
-                yield RichLog(id="log-view", highlight=True, markup=True)
-                yield Input(placeholder="Type 'help' to get help...", id="cmd-input")
+        # i am mozart and i compose
+        #pelase explain what this does
 
     def on_mount(self) -> None:
         self.game = GameEngine()
@@ -339,10 +207,10 @@ class TerminalFactoryApp(App):
         self.update_ui()
         self.set_interval(0.2, self.game_loop)
 
-    def game_loop(self) -> None:
-        if not self.game.paused:
-            self.game.tick(self.log_to_ui)
-            self.update_ui()
+
+    Define a Game Loop method with the parameter "Self", that returns a void value.
+    Inside of the method, add a conditional "if" statement, that checks whether or not
+    the game is NOT paused. If the game is not paused, More methods.
 
     def update_ui(self) -> None:
         # Redraws the expanded game grid interface on the screen
@@ -355,25 +223,60 @@ class TerminalFactoryApp(App):
                     part = lines[line_idx]
                     
                     if cell.id == self.game.selected_cell:
-                        grid_text.append(part, style="bold white reverse")
-                    else:
+                        grid_text.append(part, style="bold white reverse")     # I will not delete any of this
+                                                                               # Because shi lowk got me philosophical
+                                                                               # bkgrnd do you know what this does
+                                                                               # because i dont
+                                                                               # what does this do bkrnnd
+                                                                               # my wife left me bkgrnd
+                                                                               # because of this
+                                                                               # can you believe that
+                                                                               # whatveer you wouldnt understand
+                                                                               # backgrnd
+                                                                               # g
+                                                                               backgrn
+                                                                               # btw why when i try to run new code
+                                                                               # which i write
+                                                                               # for fucktorium 
+                                                                               # it doesnt work
+                                                                               # wait ill print message
+                                                                               # "File "c:\Users\User\Downloads\FactoryGame-main\FactoryGame-main\main.py", line 23
+                                                                               # R) direction object direction direction 0 # whatever ill just delete evrything
+                                                                               # ^
+                                                                               # SyntaxError: unmatched ')'"
+                                                                               #
+                                                                               # is python broken
+                                                                               idk BrokenPipeError <--- that was meant to say "bro"
+                                                                               not "BrokenPipeError" but this bullshit ass language
+
+                        
+                     else: 
                         grid_text.append(part)
                 grid_text.append("\n")
             
         self.grid_view.update(grid_text)
         status = "PAUSED" if self.game.paused else "RUNNING"
-        self.title = f"Factory Game | Status: {status} | Money: ${self.game.money} | Ticks: {self.game.ticks} | Cell: {self.game.selected_cell}"
+        self.title = f"Terminal Factory | Status: {status} | Money: ${self.game.money} | Ticks: {self.game.ticks} | Cell: {self.game.selected_cell}"
 
-    def log_to_ui(self, message: str) -> None:
-        self.log_view.write(message)
+    # if my life was on the line i could not tell you what this does
 
-    def on_input_submitted(self, event: Input.Submitted) -> None:
-        cmd = event.value
-        if cmd.strip():
-            self.log_to_ui(f"> {cmd}")
-            CommandParser.execute(cmd, self.game, self.log_to_ui)
-        self.query_one(Input).value = ""
-        self.update_ui()
+    #i deleted this because i dont know what it does 
 
-if __name__ == "__main__":
-    TerminalFactoryApp().run()
+i think this runs
+
+
+
+
+
+
+
+
+
+
+Comment: Hi I am Penguin
+Hi
+
+
+The resurrection of The Penguins
+#ClubPenguin
+
