@@ -362,7 +362,7 @@ class TerminalFactoryApp(App):
             
         self.grid_view.update(grid_text)
         status = "PAUSED" if self.game.paused else "RUNNING"
-        self.title = f"Terminal Factory | Status: {status} | Money: ${self.game.money} | Ticks: {self.game.ticks} | Cell: {self.game.selected_cell}"
+        self.title = f"Factory Game | Status: {status} | Money: ${self.game.money} | Ticks: {self.game.ticks} | Cell: {self.game.selected_cell}"
 
     def log_to_ui(self, message: str) -> None:
         self.log_view.write(message)
