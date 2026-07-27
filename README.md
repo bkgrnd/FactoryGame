@@ -1,4 +1,4 @@
-# Terminal Factory 🏭
+# Factory Game 🏭
 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/a9830512-5af2-43ef-a0e8-a17abd680bf7" />
 
