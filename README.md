@@ -27,3 +27,6 @@ Make sure you have Python 3.8+ installed, then install the required dependencies
 
 ```bash
 pip install textual rich
+```
+
+if this isnt obvious, its vibecoded but i will be making HUMAN updates, and HUMAN edits to this game.
